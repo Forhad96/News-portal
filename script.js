@@ -40,7 +40,7 @@ const displayNewsHandler = async (categoryId) => {
     <figure><img src="${news?.image_url}" alt="Shoes" /></figure>
     <div class="card-body">
       <h2 class="card-title font-bold">
-      ${news?.title?.slice(0, 20)}
+      ${news?.title?.slice(0, 25)}
 
       <div class="indicator">
       <span class="indicator-item badge badge-accent">${
@@ -50,7 +50,7 @@ const displayNewsHandler = async (categoryId) => {
     </div>
       </h2>
       <p>${news?.details?.slice(0, 50)}</p>
-      <p class= 'font-bold'>Total view:${news.total_view}</p>
+      <p class= 'font-bold'>Total view:${news.total_view ? news.total_view:' No views'}</p>
       <div class="card-footer flex justify-between mt-8">
         <div class="flex">
           <div >
@@ -92,13 +92,13 @@ const modalHandler = async (detailsId) =>{
   const res = await fetch(`https://openapi.programming-hero.com/api/news/${detailsId}`);
   const data = await res.json();
   const modalDetails = data.data;
-  // console.log(modalDetails);
+  console.log(modalDetails);
+  const modalContainer = document.getElementById('modal-container');
   modalDetails.forEach(details =>{
-    // console.log(details);
-    const div = document.getElementById('div')
+
+    const div = document.createElement('div');
     div.innerHTML = `
-    <!-- You can open the modal using ID.showModal() method -->
-<dialog id="my_modal_3" class="modal">
+<dialog id="modal-card" class="modal">
   <form method="dialog" class="modal-box">
     <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
     <h3 class="font-bold text-lg">Hello!</h3>
@@ -106,7 +106,9 @@ const modalHandler = async (detailsId) =>{
   </form>
 </dialog>
     `
-    my_modal_3.showModal()
+    const modalCard = document.getElementById('modal-card')
+    modalContainer.appendChild(div);
+    modalCard.showModal()
   })
 }
 
